@@ -4,8 +4,10 @@ import com.digitalinnovation.peopleapi.dto.mapper.PersonMapper;
 import com.digitalinnovation.peopleapi.dto.request.PersonDTO;
 import com.digitalinnovation.peopleapi.dto.response.MessageResponseDTO;
 import com.digitalinnovation.peopleapi.entity.Person;
+import com.digitalinnovation.peopleapi.exception.PersonNotFoundException;
 import com.digitalinnovation.peopleapi.repository.PersonRepository;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,6 +43,14 @@ public class PersonService {
     return allPeople.stream()
         .map(personMapper::toDTO) // de etnidade para DTO
         .collect(Collectors.toList());
+  }
+
+  public PersonDTO findById(Long id) throws PersonNotFoundException {
+    Optional<Person> optionalPerson = personRepository.findById(id);
+    if (optionalPerson.isEmpty()) {
+      throw new PersonNotFoundException(id);
+    }
+    return personMapper.toDTO(optionalPerson.get());
   }
 
   private MessageResponseDTO createMessageResponse(String s, Long id2) {
