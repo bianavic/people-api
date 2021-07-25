@@ -7,7 +7,6 @@ import com.digitalinnovation.peopleapi.entity.Person;
 import com.digitalinnovation.peopleapi.exception.PersonNotFoundException;
 import com.digitalinnovation.peopleapi.repository.PersonRepository;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,21 +49,33 @@ public class PersonService {
     return personMapper.toDTO(person);
   }
 
-  private MessageResponseDTO createMessageResponse(String s, Long id2) {
-    return MessageResponseDTO
-        .builder()
-        .message(s + id2)
-        .build();
-  }
-
   public void delete(Long id) throws PersonNotFoundException {
     verifyIfExists(id);
     personRepository.deleteById(id);
   }
 
+  public MessageResponseDTO updateById(Long id, PersonDTO personDTO)
+      throws PersonNotFoundException {
+
+    verifyIfExists(id);
+
+    Person personToSUpdate = personMapper.toModel(personDTO);
+    Person updatedPerson = personRepository.save(personToSUpdate);
+
+    MessageResponseDTO messageResponse = createMessageResponse("Person successfully created with ID ", updatedPerson.getId());    // utilizando o builder evita criar direto no construtor,
+    return messageResponse;
+
+  }
 
   private Person verifyIfExists(Long id) throws PersonNotFoundException {
     return personRepository.findById(id).orElseThrow(() -> new PersonNotFoundException(id));
+  }
+
+  private MessageResponseDTO createMessageResponse(String message, Long id) {
+    return MessageResponseDTO
+        .builder()
+        .message(message + id)
+        .build();
   }
 
 }
