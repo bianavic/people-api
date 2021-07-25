@@ -8,22 +8,17 @@ import com.digitalinnovation.peopleapi.exception.PersonNotFoundException;
 import com.digitalinnovation.peopleapi.repository.PersonRepository;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class PersonService {
 
   private final PersonRepository personRepository;
 
   private final PersonMapper personMapper;
-
-  @Autowired
-  public PersonService(PersonRepository personRepository,
-      PersonMapper personMapper) {
-    this.personRepository = personRepository;
-    this.personMapper = personMapper;
-  }
 
   public MessageResponseDTO create(PersonDTO personDTO) {
     // conversao de person DTO para entidades pq repository salva apenas entidades
