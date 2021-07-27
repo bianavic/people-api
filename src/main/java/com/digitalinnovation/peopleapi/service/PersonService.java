@@ -28,7 +28,6 @@ public class PersonService {
     MessageResponseDTO messageResponse = createMessageResponse("Person successfully created with ID ", savedPerson.getId());    // utilizando o builder evita criar direto no construtor,
     // passando e tratando de forma mais encapsulada os dados de entrada
     return messageResponse;
-
   }
 
   public List<PersonDTO> listAll() {

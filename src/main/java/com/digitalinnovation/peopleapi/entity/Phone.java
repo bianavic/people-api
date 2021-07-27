@@ -1,17 +1,11 @@
 package com.digitalinnovation.peopleapi.entity;
 
-import com.digitalinnovation.peopleapi.PhoneType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -25,7 +19,7 @@ public class Phone {
   @Enumerated(EnumType.STRING)
   @Column(nullable = false)
   private PhoneType type;
-  @Column(nullable = false)
+  @Column(nullable = false, unique = true)
   private String number;
 
 }
