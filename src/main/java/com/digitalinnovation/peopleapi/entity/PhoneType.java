@@ -1,4 +1,4 @@
-package com.digitalinnovation.peopleapi;
+package com.digitalinnovation.peopleapi.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ public enum PhoneType {
 
   HOME("home"),
   MOBILE("mobile"),
-  COMERCIAL("comercial");
+  COMMERCIAL("commercial");
 
   private final String description;
 
